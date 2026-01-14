@@ -30,7 +30,7 @@
                             @endforeach
                         </select>
 
-                        <select name="category" class="px-4 py-3 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 bg-white transition-colors">
+                        <select name="category" class="px-6 py-3 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 bg-white transition-colors">
                             <option value="">All Categories</option>
                             @foreach($categories as $category)
                                 <option value="{{ $category }}" {{ request('category') == $category ? 'selected' : '' }}>{{ $category }}</option>
@@ -67,7 +67,7 @@
                             <!-- Book Cover -->
                             <div class="aspect-[3/4] relative overflow-hidden bg-gradient-to-br from-slate-100 to-slate-200">
                                 @if($book->cover_image)
-                                    <img src="{{ Storage::url($book->cover_image) }}" alt="{{ $book->title }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                                    <img src="{{ asset($book->cover_image) }}" alt="{{ $book->title }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
                                 @else
                                     <div class="w-full h-full flex items-center justify-center">
                                         <svg class="w-16 h-16 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">

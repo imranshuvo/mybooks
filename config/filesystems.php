@@ -60,6 +60,15 @@ return [
             'report' => false,
         ],
 
+        // Direct public storage for hosts without symlink support
+        'covers' => [
+            'driver' => 'local',
+            'root' => public_path('covers'),
+            'url' => env('APP_URL').'/covers',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
     ],
 
     /*

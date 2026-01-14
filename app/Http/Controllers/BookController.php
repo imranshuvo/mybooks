@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\BookNotification;
 use App\Models\Book;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
@@ -50,6 +52,25 @@ class BookController extends Controller
         $years = Book::distinct()->whereNotNull('publication_year')->orderBy('publication_year', 'desc')->pluck('publication_year');
 
         return view('welcome', compact('books', 'languages', 'categories', 'years'));
+    }
+
+    /**
+     * Display the specified book publicly (no auth required).
+     */
+    public function publicShow(Book $book)
+    {
+        $book->load('addedBy');
+        
+        // Get related books (same category or author)
+        $relatedBooks = Book::where('id', '!=', $book->id)
+            ->where(function ($query) use ($book) {
+                $query->where('category', $book->category)
+                    ->orWhere('author', $book->author);
+            })
+            ->limit(4)
+            ->get();
+
+        return view('books.public-show', compact('book', 'relatedBooks'));
     }
 
     public function index(Request $request)
@@ -121,10 +142,17 @@ class BookController extends Controller
 
         // Handle cover image upload
         if ($request->hasFile('cover_image')) {
-            $validated['cover_image'] = $request->file('cover_image')->store('covers', 'public');
+            $filename = time() . '_' . $request->file('cover_image')->getClientOriginalName();
+            $request->file('cover_image')->move(public_path('covers'), $filename);
+            $validated['cover_image'] = 'covers/' . $filename;
         }
 
-        Book::create($validated);
+        $book = Book::create($validated);
+
+        // Send email notification
+        Mail::to('imrankhanshuvo@gmail.com')->send(
+            new BookNotification('added', $book, auth()->user()->name)
+        );
 
         return redirect()->route('books.index')->with('success', 'Book added successfully!');
     }
@@ -166,25 +194,41 @@ class BookController extends Controller
         // Handle cover image upload
         if ($request->hasFile('cover_image')) {
             // Delete old image
-            if ($book->cover_image) {
-                Storage::disk('public')->delete($book->cover_image);
+            if ($book->cover_image && file_exists(public_path($book->cover_image))) {
+                unlink(public_path($book->cover_image));
             }
-            $validated['cover_image'] = $request->file('cover_image')->store('covers', 'public');
+            $filename = time() . '_' . $request->file('cover_image')->getClientOriginalName();
+            $request->file('cover_image')->move(public_path('covers'), $filename);
+            $validated['cover_image'] = 'covers/' . $filename;
         }
 
         $book->update($validated);
+
+        // Send email notification
+        Mail::to('imrankhanshuvo@gmail.com')->send(
+            new BookNotification('updated', $book, auth()->user()->name)
+        );
 
         return redirect()->route('books.show', $book)->with('success', 'Book updated successfully!');
     }
 
     public function destroy(Book $book)
     {
+        // Store book info before deletion for email
+        $bookCopy = $book->replicate();
+        $userName = auth()->user()->name;
+
         // Delete cover image
-        if ($book->cover_image) {
-            Storage::disk('public')->delete($book->cover_image);
+        if ($book->cover_image && file_exists(public_path($book->cover_image))) {
+            unlink(public_path($book->cover_image));
         }
 
         $book->delete();
+
+        // Send email notification
+        Mail::to('imrankhanshuvo@gmail.com')->send(
+            new BookNotification('deleted', $bookCopy, $userName)
+        );
 
         return redirect()->route('books.index')->with('success', 'Book deleted successfully!');
     }

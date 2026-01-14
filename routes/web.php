@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Route;
 // Public welcome page with books
 Route::get('/', [BookController::class, 'welcome'])->name('welcome');
 
+// Public book detail page
+Route::get('/book/{book}', [BookController::class, 'publicShow'])->name('book.public.show');
+
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     

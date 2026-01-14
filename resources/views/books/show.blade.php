@@ -36,7 +36,7 @@
                         <!-- Cover -->
                         <div class="flex-shrink-0">
                             @if($book->cover_image)
-                                <img src="{{ Storage::url($book->cover_image) }}" alt="{{ $book->title }}" class="w-40 h-56 object-cover rounded-xl shadow-lg">
+                                <img src="{{ asset($book->cover_image) }}" alt="{{ $book->title }}" class="w-40 h-56 object-cover rounded-xl shadow-lg">
                             @else
                                 <div class="w-40 h-56 bg-gradient-to-br from-slate-100 to-slate-200 rounded-xl flex items-center justify-center">
                                     <svg class="w-16 h-16 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">

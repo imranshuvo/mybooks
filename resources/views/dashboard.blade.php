@@ -83,7 +83,7 @@
                             @foreach($recentBooks as $book)
                                 <a href="{{ route('books.show', $book) }}" class="flex items-center p-5 hover:bg-slate-50/80 transition-colors group">
                                     @if($book->cover_image)
-                                        <img src="{{ Storage::url($book->cover_image) }}" alt="{{ $book->title }}" class="w-16 h-24 object-cover rounded-xl shadow-sm group-hover:shadow-md transition-shadow flex-shrink-0">
+                                        <img src="{{ asset($book->cover_image) }}" alt="{{ $book->title }}" class="w-16 h-24 object-cover rounded-xl shadow-sm group-hover:shadow-md transition-shadow flex-shrink-0">
                                     @else
                                         <div class="w-16 h-24 bg-gradient-to-br from-slate-100 to-slate-200 rounded-xl flex items-center justify-center flex-shrink-0">
                                             <svg class="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">

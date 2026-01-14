@@ -22,7 +22,7 @@
                     <!-- Current Cover Preview -->
                     @if($book->cover_image)
                         <div class="flex items-center gap-5 p-5 bg-gradient-to-r from-slate-50 to-slate-100 rounded-xl border border-slate-200/60">
-                            <img src="{{ Storage::url($book->cover_image) }}" alt="{{ $book->title }}" class="w-16 h-24 object-cover rounded-lg shadow-md">
+                            <img src="{{ asset($book->cover_image) }}" alt="{{ $book->title }}" class="w-16 h-24 object-cover rounded-lg shadow-md">
                             <div>
                                 <p class="text-sm font-semibold text-slate-900">Current cover</p>
                                 <p class="text-xs text-slate-500 mt-1">Upload a new image below to replace it</p>
@@ -162,13 +162,9 @@
 
                 <!-- Form Actions -->
                 <div class="px-8 py-5 bg-gradient-to-r from-slate-50 to-slate-100 border-t border-slate-200/60 flex justify-between items-center">
-                    <form method="POST" action="{{ route('books.destroy', $book) }}" onsubmit="return confirm('Are you sure you want to delete this book?');">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="px-5 py-2.5 text-sm font-semibold text-red-600 hover:text-red-700 hover:bg-red-50 rounded-xl transition-colors">
-                            Delete Book
-                        </button>
-                    </form>
+                    <button type="button" onclick="document.getElementById('delete-form').submit()" class="px-5 py-2.5 text-sm font-semibold text-red-600 hover:text-red-700 hover:bg-red-50 rounded-xl transition-colors">
+                        Delete Book
+                    </button>
                     <div class="flex gap-3">
                         <a href="{{ route('books.show', $book) }}" class="px-5 py-2.5 text-sm font-semibold text-slate-700 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors">
                             Cancel
@@ -178,6 +174,12 @@
                         </button>
                     </div>
                 </div>
+            </form>
+            
+            <!-- Delete form outside the main form -->
+            <form id="delete-form" method="POST" action="{{ route('books.destroy', $book) }}" onsubmit="return confirm('Are you sure you want to delete this book?');" class="hidden">
+                @csrf
+                @method('DELETE')
             </form>
         </div>
     </div>

@@ -37,7 +37,7 @@
 
             <!-- Flash Messages -->
             @if(session('success'))
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6" x-data="{ show: true }" x-show="show" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 py-12" x-data="{ show: true }" x-show="show" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
                     <div class="bg-emerald-50 border border-emerald-200/60 text-emerald-800 px-5 py-4 rounded-2xl flex items-center justify-between shadow-sm" role="alert">
                         <div class="flex items-center">
                             <div class="flex-shrink-0 w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center mr-4">
@@ -55,7 +55,7 @@
             @endif
 
             @if(session('error'))
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6" x-data="{ show: true }" x-show="show">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 py-12" x-data="{ show: true }" x-show="show">
                     <div class="bg-rose-50 border border-rose-200/60 text-rose-800 px-5 py-4 rounded-2xl flex items-center justify-between shadow-sm" role="alert">
                         <div class="flex items-center">
                             <div class="flex-shrink-0 w-10 h-10 bg-rose-100 rounded-xl flex items-center justify-center mr-4">

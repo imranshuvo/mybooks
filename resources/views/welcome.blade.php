@@ -84,7 +84,7 @@
                         </select>
                     </div>
                     <div>
-                        <select name="category" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition-colors">
+                        <select name="category" class="w-full px-6 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition-colors">
                             <option value="">Category</option>
                             @foreach($categories as $category)
                                 <option value="{{ $category }}" {{ request('category') == $category ? 'selected' : '' }}>{{ $category }}</option>
@@ -114,25 +114,22 @@
     <!-- Books Grid -->
     <div class="px-6 pb-20">
         <div class="max-w-7xl mx-auto">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                 @forelse($books as $book)
-                    <div class="group">
-                        @auth
-                            <a href="{{ route('books.show', $book) }}" class="block">
-                        @endauth
-                            <div class="bg-white border border-slate-200/60 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:shadow-slate-200/50 hover:-translate-y-1 transition-all duration-300">
-                                @if($book->cover_image)
-                                    <div class="aspect-[3/4] overflow-hidden bg-gradient-to-br from-slate-100 to-slate-200">
-                                        <img src="{{ Storage::url($book->cover_image) }}" alt="{{ $book->title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                                    </div>
-                                @else
-                                    <div class="aspect-[3/4] bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center">
-                                        <svg class="w-16 h-16 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                                        </svg>
-                                    </div>
-                                @endif
-                                <div class="p-4">
+                    <a href="{{ route('book.public.show', $book) }}" class="group block">
+                        <div class="bg-white border border-slate-200/60 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:shadow-slate-200/50 hover:-translate-y-1 transition-all duration-300">
+                            @if($book->cover_image)
+                                <div class="aspect-[3/4] overflow-hidden bg-gradient-to-br from-slate-100 to-slate-200">
+                                    <img src="{{ asset($book->cover_image) }}" alt="{{ $book->title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                </div>
+                            @else
+                                <div class="aspect-[3/4] bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center">
+                                    <svg class="w-16 h-16 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                    </svg>
+                                </div>
+                            @endif
+                            <div class="p-4">
                                     <h3 class="font-semibold text-slate-900 text-base mb-1 line-clamp-2 group-hover:text-violet-600 transition-colors">{{ $book->title }}</h3>
                                     <p class="text-sm text-slate-500 mb-3">{{ $book->author }}</p>
                                     <div class="flex items-center justify-between text-xs">
@@ -146,10 +143,7 @@
                                     </div>
                                 </div>
                             </div>
-                        @auth
-                            </a>
-                        @endauth
-                    </div>
+                    </a>
                 @empty
                     <div class="col-span-full">
                         <div class="bg-white rounded-2xl border border-slate-200/60 shadow-sm p-16 text-center">
