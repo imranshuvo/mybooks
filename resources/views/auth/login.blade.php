@@ -41,10 +41,5 @@
         <button type="submit" class="w-full px-5 py-3 bg-gradient-to-r from-violet-600 to-indigo-600 text-white text-sm font-semibold rounded-xl hover:from-violet-700 hover:to-indigo-700 shadow-lg shadow-violet-500/25 transition-all">
             Sign in
         </button>
-
-        <p class="text-center text-sm text-slate-500 pt-2">
-            Don't have an account?
-            <a href="{{ route('register') }}" class="font-semibold text-violet-600 hover:text-violet-700 transition-colors">Sign up</a>
-        </p>
     </form>
 </x-guest-layout>

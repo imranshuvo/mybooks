@@ -27,8 +27,7 @@
                         <a href="{{ route('dashboard') }}" class="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors">Dashboard</a>
                         <a href="{{ route('books.index') }}" class="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors">My Books</a>
                     @else
-                        <a href="{{ route('login') }}" class="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors">Sign in</a>
-                        <a href="{{ route('register') }}" class="px-5 py-2.5 bg-gradient-to-r from-violet-600 to-indigo-600 text-white text-sm font-semibold rounded-xl hover:from-violet-700 hover:to-indigo-700 shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40 transition-all duration-200">Get Started</a>
+                        <a href="{{ route('login') }}" class="px-5 py-2.5 bg-gradient-to-r from-violet-600 to-indigo-600 text-white text-sm font-semibold rounded-xl hover:from-violet-700 hover:to-indigo-700 shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40 transition-all duration-200">Sign in</a>
                     @endauth
                 </div>
             </div>
@@ -160,10 +159,7 @@
                                 </svg>
                             </div>
                             <h3 class="text-xl font-semibold text-slate-900 mb-2">No books found</h3>
-                            <p class="text-slate-500 mb-8">Try adjusting your search filters</p>
-                            @guest
-                                <a href="{{ route('register') }}" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-violet-600 to-indigo-600 text-white text-sm font-semibold rounded-xl hover:from-violet-700 hover:to-indigo-700 shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40 transition-all duration-200">Join to Add Books</a>
-                            @endguest
+                            <p class="text-slate-500">Try adjusting your search filters</p>
                         </div>
                     </div>
                 @endforelse
@@ -182,12 +178,9 @@
     @guest
         <div class="px-6 pb-20">
             <div class="max-w-4xl mx-auto bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-3xl p-12 text-center shadow-2xl">
-                <h2 class="text-3xl font-bold text-white mb-4">Start Your Library Today</h2>
-                <p class="text-slate-300 text-lg mb-10">Join to organize, track, and share your book collection</p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a href="{{ route('register') }}" class="px-8 py-3.5 bg-gradient-to-r from-violet-600 to-indigo-600 text-white text-sm font-semibold rounded-xl hover:from-violet-700 hover:to-indigo-700 shadow-lg shadow-violet-500/25 transition-all duration-200">Create Account</a>
-                    <a href="{{ route('login') }}" class="px-8 py-3.5 bg-white/10 backdrop-blur border border-white/20 text-white text-sm font-semibold rounded-xl hover:bg-white/20 transition-all duration-200">Sign In</a>
-                </div>
+                <h2 class="text-3xl font-bold text-white mb-4">Family Members</h2>
+                <p class="text-slate-300 text-lg mb-10">Sign in to manage the collection, track reading progress, and more</p>
+                <a href="{{ route('login') }}" class="px-8 py-3.5 bg-gradient-to-r from-violet-600 to-indigo-600 text-white text-sm font-semibold rounded-xl hover:from-violet-700 hover:to-indigo-700 shadow-lg shadow-violet-500/25 transition-all duration-200">Sign In</a>
             </div>
         </div>
     @endguest
