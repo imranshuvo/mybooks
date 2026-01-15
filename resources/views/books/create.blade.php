@@ -129,7 +129,7 @@
                             <input id="cover_image" type="file" name="cover_image" accept="image/*" 
                                 class="w-full text-sm text-slate-500 file:mr-4 file:py-3 file:px-5 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100 file:cursor-pointer cursor-pointer border border-slate-200 rounded-xl">
                         </div>
-                        <p class="mt-2 text-xs text-slate-500">JPG, PNG or GIF. Max 2MB.</p>
+                        <p class="mt-2 text-xs text-slate-500">JPG, PNG or GIF. Max 10MB. Images are automatically optimized for storage.</p>
                         @error('cover_image')
                             <p class="mt-2 text-sm text-rose-600">{{ $message }}</p>
                         @enderror

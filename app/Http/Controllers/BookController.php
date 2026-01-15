@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\BookNotification;
 use App\Models\Book;
+use App\Services\ImageOptimizer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
@@ -134,17 +135,25 @@ class BookController extends Controller
             'total_pages' => 'nullable|integer|min:1',
             'category' => 'nullable|string|max:255',
             'status' => 'required|in:available,borrowed,reading',
-            'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
             'description' => 'nullable|string',
         ]);
 
         $validated['added_by'] = auth()->id();
 
-        // Handle cover image upload
+        // Handle cover image upload with optimization
         if ($request->hasFile('cover_image')) {
-            $filename = time() . '_' . $request->file('cover_image')->getClientOriginalName();
-            $request->file('cover_image')->move(public_path('covers'), $filename);
-            $validated['cover_image'] = 'covers/' . $filename;
+            $optimizer = new ImageOptimizer(quality: 30, maxWidth: 1200, maxHeight: 1600);
+            $optimizedPath = $optimizer->optimize($request->file('cover_image'), 'covers');
+            
+            if ($optimizedPath) {
+                $validated['cover_image'] = $optimizedPath;
+            } else {
+                // Fallback to original upload if optimization fails
+                $filename = time() . '_' . $request->file('cover_image')->getClientOriginalName();
+                $request->file('cover_image')->move(public_path('covers'), $filename);
+                $validated['cover_image'] = 'covers/' . $filename;
+            }
         }
 
         $book = Book::create($validated);
@@ -187,19 +196,28 @@ class BookController extends Controller
             'total_pages' => 'nullable|integer|min:1',
             'category' => 'nullable|string|max:255',
             'status' => 'required|in:available,borrowed,reading',
-            'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
             'description' => 'nullable|string',
         ]);
 
-        // Handle cover image upload
+        // Handle cover image upload with optimization
         if ($request->hasFile('cover_image')) {
             // Delete old image
             if ($book->cover_image && file_exists(public_path($book->cover_image))) {
                 unlink(public_path($book->cover_image));
             }
-            $filename = time() . '_' . $request->file('cover_image')->getClientOriginalName();
-            $request->file('cover_image')->move(public_path('covers'), $filename);
-            $validated['cover_image'] = 'covers/' . $filename;
+            
+            $optimizer = new ImageOptimizer(quality: 30, maxWidth: 1200, maxHeight: 1600);
+            $optimizedPath = $optimizer->optimize($request->file('cover_image'), 'covers');
+            
+            if ($optimizedPath) {
+                $validated['cover_image'] = $optimizedPath;
+            } else {
+                // Fallback to original upload if optimization fails
+                $filename = time() . '_' . $request->file('cover_image')->getClientOriginalName();
+                $request->file('cover_image')->move(public_path('covers'), $filename);
+                $validated['cover_image'] = 'covers/' . $filename;
+            }
         }
 
         $book->update($validated);
