@@ -37,18 +37,18 @@
                             @endforeach
                         </select>
 
-                        <select name="status" class="px-4 py-3 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 bg-white transition-colors">
-                            <option value="">All Status</option>
-                            <option value="available" {{ request('status') == 'available' ? 'selected' : '' }}>Available</option>
-                            <option value="borrowed" {{ request('status') == 'borrowed' ? 'selected' : '' }}>Borrowed</option>
-                            <option value="reading" {{ request('status') == 'reading' ? 'selected' : '' }}>Reading</option>
+                        <select name="author" class="px-4 py-3 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 bg-white transition-colors">
+                            <option value="">All Authors</option>
+                            @foreach($authors as $author)
+                                <option value="{{ $author }}" {{ request('author') == $author ? 'selected' : '' }}>{{ $author }}</option>
+                            @endforeach
                         </select>
 
                         <button type="submit" class="px-6 py-3 bg-gradient-to-r from-violet-600 to-indigo-600 text-white text-sm font-semibold rounded-xl hover:from-violet-700 hover:to-indigo-700 shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40 transition-all duration-200">
                             Search
                         </button>
 
-                        @if(request()->anyFilled(['search', 'language', 'category', 'status', 'year']))
+                        @if(request()->anyFilled(['search', 'language', 'category', 'author', 'year']))
                             <a href="{{ route('books.index') }}" class="px-6 py-3 border border-slate-200 text-slate-600 text-sm font-medium rounded-xl hover:bg-slate-50 transition-colors">
                                 Clear
                             </a>
@@ -115,14 +115,14 @@
                 </div>
                 <h3 class="text-xl font-semibold text-slate-900">No books found</h3>
                 <p class="mt-2 text-slate-500 max-w-sm mx-auto">
-                    @if(request()->anyFilled(['search', 'language', 'category', 'status', 'year']))
+                    @if(request()->anyFilled(['search', 'language', 'category', 'author', 'year']))
                         Try adjusting your filters or search query.
                     @else
                         Get started by adding your first book to the library.
                     @endif
                 </p>
                 <div class="mt-8">
-                    @if(request()->anyFilled(['search', 'language', 'category', 'status', 'year']))
+                    @if(request()->anyFilled(['search', 'language', 'category', 'author', 'year']))
                         <a href="{{ route('books.index') }}" class="inline-flex items-center px-6 py-3 border border-slate-200 text-slate-700 text-sm font-medium rounded-xl hover:bg-slate-50 transition-colors">
                             Clear Filters
                         </a>

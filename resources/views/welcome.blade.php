@@ -92,11 +92,11 @@
                         </select>
                     </div>
                     <div>
-                        <select name="status" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition-colors">
-                            <option value="">Status</option>
-                            <option value="available" {{ request('status') == 'available' ? 'selected' : '' }}>Available</option>
-                            <option value="borrowed" {{ request('status') == 'borrowed' ? 'selected' : '' }}>Borrowed</option>
-                            <option value="reading" {{ request('status') == 'reading' ? 'selected' : '' }}>Reading</option>
+                        <select name="author" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition-colors">
+                            <option value="">Author</option>
+                            @foreach($authors as $author)
+                                <option value="{{ $author }}" {{ request('author') == $author ? 'selected' : '' }}>{{ $author }}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
@@ -114,7 +114,7 @@
     <!-- Books Grid -->
     <div class="px-6 pb-20">
         <div class="max-w-7xl mx-auto">
-            <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-6">
                 @forelse($books as $book)
                     <a href="{{ route('book.public.show', $book) }}" class="group block">
                         <div class="bg-white border border-slate-200/60 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:shadow-slate-200/50 hover:-translate-y-1 transition-all duration-300">

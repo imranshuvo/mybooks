@@ -40,19 +40,20 @@ class BookController extends Controller
             $query->where('publication_year', $request->year);
         }
 
-        // Filter by status
-        if ($request->filled('status')) {
-            $query->where('status', $request->status);
+        // Filter by author
+        if ($request->filled('author')) {
+            $query->where('author', $request->author);
         }
 
-        $books = $query->latest()->paginate(12);
+        $books = $query->latest()->paginate(20);
 
         // Get unique values for filters
         $languages = Book::distinct()->pluck('language');
         $categories = Book::distinct()->whereNotNull('category')->pluck('category');
         $years = Book::distinct()->whereNotNull('publication_year')->orderBy('publication_year', 'desc')->pluck('publication_year');
+        $authors = Book::distinct()->whereNotNull('author')->orderBy('author')->pluck('author');
 
-        return view('welcome', compact('books', 'languages', 'categories', 'years'));
+        return view('welcome', compact('books', 'languages', 'categories', 'years', 'authors'));
     }
 
     /**
@@ -103,9 +104,9 @@ class BookController extends Controller
             $query->where('publication_year', $request->year);
         }
 
-        // Filter by status
-        if ($request->filled('status')) {
-            $query->where('status', $request->status);
+        // Filter by author
+        if ($request->filled('author')) {
+            $query->where('author', $request->author);
         }
 
         $books = $query->latest()->paginate(12);
@@ -114,8 +115,9 @@ class BookController extends Controller
         $languages = Book::distinct()->pluck('language');
         $categories = Book::distinct()->whereNotNull('category')->pluck('category');
         $years = Book::distinct()->whereNotNull('publication_year')->orderBy('publication_year', 'desc')->pluck('publication_year');
+        $authors = Book::distinct()->whereNotNull('author')->orderBy('author')->pluck('author');
 
-        return view('books.index', compact('books', 'languages', 'categories', 'years'));
+        return view('books.index', compact('books', 'languages', 'categories', 'years', 'authors'));
     }
 
     public function create()

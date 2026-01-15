@@ -24,6 +24,10 @@
 
     <style>
         body { font-family: 'Inter', sans-serif; }
+        @media (min-width: 1024px) {
+            .book-cover-section { width: 60%; max-width: 60%; }
+            .book-info-section { width: 40%; }
+        }
     </style>
 </head>
 <body class="font-sans antialiased bg-gradient-to-br from-slate-50 via-white to-slate-100 min-h-screen">
@@ -65,8 +69,8 @@
             <!-- Book Detail Card -->
             <div class="bg-white rounded-3xl shadow-xl shadow-slate-200/50 overflow-hidden">
                 <div class="flex flex-col lg:flex-row">
-                    <!-- Cover Image - Left Half -->
-                    <div class="lg:w-1/2 p-8 lg:p-12 bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center min-h-[300px] lg:min-h-[600px]">
+                    <!-- Cover Image - Left Side -->
+                    <div class="book-cover-section p-8 lg:p-12 bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center min-h-[300px] lg:min-h-[600px]">
                         @if($book->cover_image)
                             <img src="{{ asset($book->cover_image) }}" alt="{{ $book->title }}" class="max-h-[450px] lg:max-h-[500px] w-auto rounded-2xl shadow-2xl shadow-slate-300/50">
                         @else
@@ -78,8 +82,8 @@
                         @endif
                     </div>
 
-                    <!-- Book Info - Right Half -->
-                    <div class="lg:w-1/2 p-8 lg:p-12 flex flex-col justify-center">
+                    <!-- Book Info - Right Side -->
+                    <div class="book-info-section p-8 lg:p-12 flex flex-col justify-center">
                         <!-- Status Badge -->
                         <div class="mb-4">
                             @php
